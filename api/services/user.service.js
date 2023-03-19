@@ -11,10 +11,6 @@ class UserService {
   }
 
   async find() {
-    // const client = await getConnection();
-    // const rta = await client.query('SELECT * FROM tasks');
-    // const query = 'SELECT * FROM tasks';
-    // const rta = await this.pool.query(query);
     const users = await models.User.findAll();
     return users;
   }

@@ -5,9 +5,7 @@ class CategoryService {
   constructor() {}
 
   async create(data) {
-    console.log({ data });
     const newCategory = await models.Category.create(data);
-    console.log({ newCategory });
     return newCategory;
   }
 
