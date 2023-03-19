@@ -7,7 +7,7 @@ function validatorHandler(schema, property) {
     // req.params -> para GET
     // req.query -> para GET
 
-    const { error } = schema.validate(data);
+    const { error } = schema.validate(data, { abortEarly: false });
     if (error) {
       next(boom.badRequest(error));
     }
