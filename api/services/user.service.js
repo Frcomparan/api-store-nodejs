@@ -1,9 +1,11 @@
 const boom = require('@hapi/boom');
 const { models } = require('../libs/sequelize');
+
 class UserService {
   constructor() {}
 
   async create(data) {
+    console.log({ data });
     const newUser = await models.User.create(data);
     return newUser;
   }
