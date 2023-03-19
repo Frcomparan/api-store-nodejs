@@ -5,6 +5,7 @@ const {
   logErros,
   errorHandler,
   boomErrorHandler,
+  ormErrorHandler,
 } = require('./middlewares/error.handle');
 
 const app = express();
@@ -31,6 +32,7 @@ app.get('/api', (req, res) => {
 routerApi(app);
 
 app.use(logErros);
+app.use(ormErrorHandler);
 app.use(boomErrorHandler);
 app.use(errorHandler);
 
