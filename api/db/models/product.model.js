@@ -1,8 +1,9 @@
 const { Model, DataTypes, Sequelize } = require('sequelize');
+const { CATEGORIES_TABLE } = require('./category.model');
 
-const CATEGORIES_TABLE = 'categories';
+const PRODUCTS_TABLE = 'products';
 
-const CategorySchema = {
+const ProductSchema = {
   id: {
     allowNull: false,
     autoIncrement: true,
@@ -12,11 +13,14 @@ const CategorySchema = {
   name: {
     allowNull: false,
     type: DataTypes.STRING,
-    unique: true,
   },
   description: {
     allowNull: false,
-    type: DataTypes.STRING,
+    type: DataTypes.TEXT,
+  },
+  price: {
+    allowNull: false,
+    type: DataTypes.FLOAT,
   },
   image: {
     allowNull: false,
@@ -28,28 +32,38 @@ const CategorySchema = {
     field: 'create_at',
     defaultValue: Sequelize.NOW,
   },
+  categoryId: {
+    field: 'category_id',
+    allowNull: false,
+    type: DataTypes.INTEGER,
+    references: {
+      model: CATEGORIES_TABLE,
+      key: 'id',
+    },
+    onUpdate: 'CASCADE',
+    onDelete: 'SET NULL',
+  },
 };
 
-class Category extends Model {
+class Product extends Model {
   static associate(models) {
-    this.hasMany(models.Product, {
-      as: 'products',
-      foreignKey: 'categoryId',
+    this.belongsTo(models.Category, {
+      as: 'category',
     });
   }
 
   static config(sequelize) {
     return {
       sequelize,
-      tableName: CATEGORIES_TABLE,
-      modelName: 'Category',
+      tableName: PRODUCTS_TABLE,
+      modelName: 'Product',
       timestamps: false,
     };
   }
 }
 
 module.exports = {
-  CATEGORIES_TABLE,
-  CategorySchema,
-  Category,
+  PRODUCTS_TABLE,
+  ProductSchema,
+  Product,
 };
