@@ -8,6 +8,8 @@ const {
   ormErrorHandler,
 } = require('./middlewares/error.handle');
 
+const { checkApiKey } = require('./middlewares/auth.handler');
+
 const app = express();
 const port = process.env.PORT || 3000;
 
@@ -26,6 +28,10 @@ const options = {
 app.use(cors(options));
 
 app.get('/api', (req, res) => {
+  res.send('Hola mi server en express');
+});
+
+app.get('/api/nueva-ruta', checkApiKey, (req, res) => {
   res.send('Hola mi server en express');
 });
 
